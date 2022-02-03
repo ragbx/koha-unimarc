@@ -12,7 +12,7 @@ use C4::Installer;
 use C4::Context;
 use Koha::AuthUtils qw( hash_password );
 
-my $marcflavour = 'UIMARC';
+my $marcflavour = 'UNIMARC';
 my ( $help, $verbose );
 
 GetOptions(
@@ -25,7 +25,6 @@ pod2usage(1) if $help;
 
 $marcflavour = uc($marcflavour);
 my $lc_marcflavour = lc $marcflavour;
-our $VERSION = get_version();
 
 if (     $marcflavour ne 'MARC21'
      and $marcflavour ne 'UNIMARC' ) {
@@ -37,8 +36,7 @@ our $root      = C4::Context->config('intranetdir');
 our $installer = C4::Installer->new;
 
 
-@records_files = ( "biblio.sql", "biblioitems.sql", "items.sql", "auth_header.sql" );
-push @records_files, "biblio_metadata.sql";
+my @records_files = ( "biblio.sql", "biblioitems.sql", "items.sql", "auth_header.sql", "biblio_metadata.sql" );
 use Data::Dumper;warn Dumper \@records_files;
 
 C4::Context->preference('VOID'); # FIXME master is broken because of 174769e382df - 16520
